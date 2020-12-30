@@ -11,6 +11,8 @@ class Estado extends Model
 
     protected $table = 'estado';
 
+    protected  $primaryKey = 'id_edo';
+
     protected $fillable = ['cod_edo','des_edo','abrv_edo', 'pais_edo', 'status_edo'];
 
     protected $hidden = ['created_at','updated_at'];
