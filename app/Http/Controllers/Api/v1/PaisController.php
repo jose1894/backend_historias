@@ -60,7 +60,7 @@ class PaisController extends Controller
     {
         $pais = Pais::find($id);
         
-        if ( empty($paise) ) {
+        if ( empty($pais) ) {
             return response()->json([
                 'message' => 'Detalle del Pais',
                 'status'=>'not found'],
@@ -68,9 +68,10 @@ class PaisController extends Controller
         } 
 
         return response()->json([
-            'message' => 'Detalle de la Marca',
+            'message' => 'Detalle del Pais',
             'status'=>'ok',
-            'data' => $pais],
+            'data' => $pais,
+            'estados' => $pais->estados],
         200);
     }
 

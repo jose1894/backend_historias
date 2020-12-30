@@ -14,7 +14,7 @@ class PaisUpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -27,9 +27,10 @@ class PaisUpdateRequest extends FormRequest
         return [
             'cod_pais' =>  [
                 'required',
-                'integer', 
+                'string',
+                'max:4', 
                 Rule::unique('pais')
-                       ->ignore($this->id)
+                       ->ignore($this->cod_pais)
                        ->where('cod_pais', $this->cod_pais)
             ],
             'des_pais' =>'required|string|max:255',
