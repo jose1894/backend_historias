@@ -124,6 +124,8 @@ class PacienteController extends Controller
         $paciente->delete();
         
 		// Se devuelve código 204 No Content.
-		return response()->json([], 204);
+		return response()->json([
+            'message' => 'paciente eliminado',
+        ], 200);
     }
 }

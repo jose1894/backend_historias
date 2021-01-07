@@ -31,8 +31,8 @@ class PacienteUpdateRequest extends FormRequest
                 'string',
                 'max:10', 
                 Rule::unique('paciente')
-                       ->ignore($this->id)
-                       ->where('tipo_id', $this->tipo_id)
+                    ->ignore($this->paciente)
+                    ->where('tipo_id', $this->tipo_id)
             ],
             'nombres' =>'required|string|max:255',
             'apellidos' =>'required|string|max:255',
