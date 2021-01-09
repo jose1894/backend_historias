@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\v1\PaisStoreRequest;
 use App\Http\Requests\Api\v1\PaisUpdateRequest;
-use App\Models\Api\Pais;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use App\Models\Api\Pais;
 
 class PaisController extends Controller
 {
@@ -18,19 +18,19 @@ class PaisController extends Controller
      */
     public function index()
     {
-        $paises = Cache::remember('cachepais',15/60, function() {
+        $paises = Cache::remember('cachepaises',15/60, function() {
 			return Pais::simplePaginate(20);  // Paginamos cada 20 elementos.
         });
         
 		return response()->json([
-            'message' => 'Pais list',
+            'message' => 'Paises list',
             'status'=>'ok',
             'totalRecords' => sizeOf($paises->items()),
             'siguiente'=>$paises->nextPageUrl(),
             'anterior'=>$paises->previousPageUrl(),
             'data'=>$paises->items(),
         ], 200);
-    }    
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -47,13 +47,12 @@ class PaisController extends Controller
             'message' => 'Pais creado exitosamente!',
             'data'=> $pais]
         ,201);
-
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Api\Pais  $pais
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -70,18 +69,17 @@ class PaisController extends Controller
         return response()->json([
             'message' => 'Detalle del Pais',
             'status'=>'ok',
-            'data' => $pais,
-            'estados' => $pais->estados],
+            'data' => $pais],
         200);
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Api\Pais  $pais
-     * @return \Illuminate\Http\Response
-     */
+    * Update the specified resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @param  \App\Models\Api\Pais  $$pais
+    * @return \Illuminate\Http\Response
+    */
     public function update(PaisUpdateRequest $request, $id)
     {
         $pais = Pais::find($id);
@@ -101,18 +99,16 @@ class PaisController extends Controller
             'status'=>'ok',
             'data' => $pais
         ],200);
-        
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Api\Pais  $pais
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
         $pais = Pais::find($id);
         
         if ( empty($pais) ) {
@@ -125,6 +121,8 @@ class PaisController extends Controller
         $pais->delete();
         
 		// Se devuelve código 204 No Content.
-		return response()->json([], 204);
+		return response()->json([
+            'message' => 'Pais eliminado',
+        ], 200);
     }
 }

@@ -23,18 +23,18 @@ class PaisUpdateRequest extends FormRequest
      * @return array
      */
     public function rules()
-    {
+    { 
         return [
             'cod_pais' =>  [
                 'required',
                 'string',
                 'max:4', 
                 Rule::unique('pais')
-                       ->ignore($this->cod_pais)
-                       ->where('cod_pais', $this->cod_pais)
+                    ->ignore($this)
+                    ->where('id',$this->id)
             ],
             'des_pais' =>'required|string|max:255',
-            'status_pais' => 'required|integer'
+            'status_pais' =>'required|integer',
         ];
     }
 }

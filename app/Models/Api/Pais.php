@@ -9,23 +9,15 @@ class Pais extends Model
 {
     use HasFactory;
 
-    protected $table = "pais";
+    /** la clave primaria de la tabla debe ser llamada id por limitacion del framework */
 
-    protected  $primaryKey = 'id_pais';
+    protected $table = 'pais';
 
-    protected $fillable = [
-        'cod_pais',
-        'des_pais',        
-        'status_pais'
-    ];
+    protected $fillable = ['cod_pais', 'des_pais', 'status_pais'];
 
     protected $hidden = ['created_at', 'updated_at'];
 
-    /**
-     * Get the comments for the blog post.
-     */
-    public function estados()
-    {
-        return $this->hasMany(Estado::class, 'pais_edo', 'id_pais');
+    public function estados() {
+        return $this->hasMany(Estado::class, 'pais_edo');
     }
 }

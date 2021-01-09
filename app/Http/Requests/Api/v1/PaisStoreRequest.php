@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Api\v1;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class PaisStoreRequest extends FormRequest
 {
@@ -24,9 +25,15 @@ class PaisStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'cod_pais' =>'required|string|max:3',
+            'cod_pais' =>  [
+                'required',
+                'string',
+                'max:4', 
+                Rule::unique('pais')
+                       ->where('cod_pais', $this->cod_pais)
+            ],
             'des_pais' =>'required|string|max:255',
-            'status_pais' => 'required|integer'
+            'status_pais' =>'required|integer',
         ];
     }
 }
