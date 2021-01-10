@@ -3,9 +3,8 @@
 namespace App\Http\Requests\Api\v1;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class PacienteUpdateRequest extends FormRequest
+class UpdatePersonaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,22 +23,18 @@ class PacienteUpdateRequest extends FormRequest
      */
     public function rules()
     {
-        dd($this->paciente);
         return [
             'tipo_id' =>'required|string|max:2',
-            'identificacion' =>  [
-                'required',
-                'string',
-                'max:10', 
-                Rule::unique('paciente')
-                    ->ignore($this->paciente)
-                    ->where('tipo_id', $this->tipo_id)
-            ],
+            'identificacion' =>  'required|string|max:10|unique:persona,identificacion,'.$this->persona,
             'nombres' =>'required|string|max:255',
             'apellidos' =>'required|string|max:255',
             'email' =>'required|string|email|max:255',
             'sexo' =>'required|string|max:2',
             'fecha_nac' =>'required|date',
+            'direccion' => 'required|string|max:500',
+            'especialidad_id' => 'required',
+            'area_id' => 'required',
+            'tipo_persona_id' => 'required',
         ];
     }
 }

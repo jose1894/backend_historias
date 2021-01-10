@@ -3,9 +3,8 @@
 namespace App\Http\Requests\Api\v1;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class PaisUpdateRequest extends FormRequest
+class EspecialidadUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,11 +22,9 @@ class PaisUpdateRequest extends FormRequest
      * @return array
      */
     public function rules()
-    { 
+    {
         return [
-            'cod_pais' => 'required|unique:pais,cod_pais,'.$this->pai,
-            'des_pais' =>'required|string|max:255',
-            'status_pais' =>'required|integer',
+            'descripcion' => 'required|string|max:255',
         ];
     }
 }
