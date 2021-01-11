@@ -36,4 +36,12 @@ class Persona extends Model
     public function tipo_persona() {
         return $this->belongsTo(TipoPersona::class, 'tipo_persona_id');
     }
+
+    public function pacienteEmergencias() {
+        return $this->hasMany(PacienteEmergencia::class, 'persona_id');
+    }
+
+    public function pacienteEmergenciaDetalles() {
+        return $this->hasMany(PacienteEmergenciaDetalle::class, 'persona_id');
+    }
 }

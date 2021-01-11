@@ -36,6 +36,8 @@ Route::group([
                 Route::resource('area', 'AreaController',[ 'except' => ['edit','create']]);
                 Route::resource('especialidad', 'EspecialidadController',[ 'except' => ['edit','create']]);
                 Route::resource('tipopersona', 'TipoPersonaController',[ 'except' => ['edit','create']]);
+                Route::resource('pacienteEmergencia', 'PacienteEmergenciaController',[ 'except' => ['edit','create']]);
+                Route::resource('pacienteEmergenciaDetalle', 'PacienteEmergenciaDetalleController',[ 'except' => ['edit','create']]);
             });
     });
 });
