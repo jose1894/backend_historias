@@ -24,7 +24,6 @@ class PacienteUpdateRequest extends FormRequest
      */
     public function rules()
     {
-        dd($this->paciente);
         return [
             'tipo_id' =>'required|string|max:2',
             'identificacion' =>  [

@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -36,8 +35,9 @@ Route::group([
                 Route::resource('area', 'AreaController',[ 'except' => ['edit','create']]);
                 Route::resource('especialidad', 'EspecialidadController',[ 'except' => ['edit','create']]);
                 Route::resource('tipopersona', 'TipoPersonaController',[ 'except' => ['edit','create']]);
-                Route::resource('pacienteEmergencia', 'PacienteEmergenciaController',[ 'except' => ['edit','create']]);
-                Route::resource('pacienteEmergenciaDetalle', 'PacienteEmergenciaDetalleController',[ 'except' => ['edit','create']]);
+                Route::resource('motivoingreso', MotivoIngresoController::class,[ 'except' => ['edit','create']]);
+                Route::resource('diagnostico', DiagnosticoController::class,[ 'except' => ['edit','create']]);
+                // Route::resource('pacienteEmergenciaDetalle', 'PacienteEmergenciaDetalleController',[ 'except' => ['edit','create']]);
             });
     });
 });
