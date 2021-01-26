@@ -44,6 +44,8 @@ class CreatePersonaTable extends Migration
                   ->on('tipo_persona')
                   ->onDelete('set null')
                   ->onUpdate('set null');
+            $table->string('talla')->nullable()->comment('TALLA DE LA PERSONA');
+            $table->string('peso')->integer()->comment('PESO DE LA PERSONA');
             $table->timestamps();
             $table->engine = 'InnoDB';	
             $table->charset = 'utf8';	

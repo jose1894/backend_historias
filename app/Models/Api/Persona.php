@@ -22,6 +22,8 @@ class Persona extends Model
         'especialidad_id',
         'area_id',
         'tipo_persona_id',
+        'talla',
+        'peso',
     ];
     protected $hidden = ['created_at','updated_at'];
 
