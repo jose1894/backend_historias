@@ -15,7 +15,9 @@ class EmergenciaDetalle extends Model
         'emergencia_id', 
         'paciente_id', 
         'motivoing_id', 
-        'diagnostico_id', 
+        'motivoingreso',
+        'diagnostico_id',
+        'diagnostico', 
         'observaciones'
     ];
 
