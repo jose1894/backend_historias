@@ -24,10 +24,10 @@ class PacienteEmergenciaDetalleUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'persona_id' => 'required',
-            'motivo_ingreso' => 'required',
-            'impresion_diagnostica' => 'required',
-            'dest' => 'required',
+            'paciente_id' => 'required',
+            'motivoingreso' => 'required',
+            'dignostico' => 'required',
+            'dest',
             'observaciones'
         ];
     }
