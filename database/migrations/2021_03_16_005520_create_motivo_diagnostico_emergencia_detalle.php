@@ -15,7 +15,7 @@ class CreateMotivoDiagnosticoEmergenciaDetalle extends Migration
     {
         Schema::table('emergencia_detalle', function (Blueprint $table) {
             $table->text('motivoingreso')->nullable()->comment('OBSERVACIONES DEL MOTIVOINGRESO')->after('motivoing_id');
-            $table->text('dignostico')->nullable()->comment('OBSERVACIONES DEL DIAGNOSTICO')->after('diagnostico_id');
+            $table->text('diagnostico')->nullable()->comment('OBSERVACIONES DEL DIAGNOSTICO')->after('diagnostico_id');
         });
     }
 
@@ -28,7 +28,7 @@ class CreateMotivoDiagnosticoEmergenciaDetalle extends Migration
     {
         Schema::table('emergencia_detalle', function (Blueprint $table) {
             $table->dropColumn('motivoingreso');
-            $table->dropColumn('dignostico');
+            $table->dropColumn('diagnostico');
         });
     }
 }

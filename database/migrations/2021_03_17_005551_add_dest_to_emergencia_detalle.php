@@ -14,7 +14,7 @@ class AddDestToEmergenciaDetalle extends Migration
     public function up()
     {
         Schema::table('emergencia_detalle', function (Blueprint $table) {
-            $table->text('dest')->nullable()->comment('DEST')->before('observaciones');
+            $table->text('dest')->nullable()->comment('DEST')->after('diagnostico');
         });
     }
 

@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\v1\EmergenciaDetalleStoreRequest;
+use App\Http\Requests\Api\v1\EmergenciaStoreRequest;
 use App\Models\Api\Emergencia;
 use App\Models\Api\EmergenciaDetalle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class EmergenciaController extends Controller
 {
@@ -38,23 +41,64 @@ class EmergenciaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(EmergenciaStoreRequest $request)
     {
-        dd($request);
-        DB::beginTransaction();
+    
 
-        try {       
-            $persona = Emergencia::create($request->all());
-                
-            return response()->json([
-                'status' => 'ok',
-                'message' => 'Persona creado exitosamente!',
-                'data'=> $persona]
-            ,201);
+        DB::beginTransaction();
+        try {        
+            $eDetalleRequest = new EmergenciaDetalleStoreRequest;
+            $emergencia = Emergencia::create($request->all());
+
+            foreach($request->detalle as $detalle ) {
+                $detalle['emergencia_id'] = $emergencia->id;
+                $validator = Validator::make($detalle, $eDetalleRequest->rules());
+        
+                if ($validator->fails()) {
+                   throw new \Exception("Error al ingresar el paciente en la emergencia");
+                   break;
+                } 
+
+                $emergencia->detalle[] = EmergenciaDetalle::create($detalle);
+            }
+            DB::commit();
+
+            return response()->json(
+                [
+                    'status' => 'ok',
+                    'message' => 'Emergencia creada exitosamente!',
+                    'data' => $emergencia
+                ],
+                201
+            );
+
         } catch (\Exception $e) {
-                DB::rollback();
-                throw $e;
+            DB::rollBack();
         }
+
+        // return response()->json(
+        //     [
+        //         'status' => 'ok',
+        //         'message' => 'Paciente creado exitosamente!',
+        //         'data' => $pacienteEmergenciaDetalle
+        //     ],
+        //     201
+        // );
+        // dd($request);
+        // DB::beginTransaction();
+
+        // try {       
+        //     $persona = Emergencia::create($request->all());
+                
+        //     return response()->json([
+        //         'status' => 'ok',
+        //         'message' => 'Persona creado exitosamente!',
+        //         'data'=> $persona]
+        //     ,201);
+        // } catch (\Exception $e) {
+        //         DB::rollback();
+        //         throw $e;
+        // }
     }
     // DB::beginTransaction();
     

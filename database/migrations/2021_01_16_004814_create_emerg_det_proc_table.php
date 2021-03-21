@@ -21,7 +21,7 @@ class CreateEmergDetProcTable extends Migration
                   ->on('emergencia_detalle')
                   ->onDelete('CASCADE')
                   ->onUpdate('CASCADE');          
-            $table->text('observaciones')->comment('OBSERVACIONES DEL PROCEDIMIENTO');  
+            $table->text('observaciones')->nullable()->comment('OBSERVACIONES DEL PROCEDIMIENTO');  
             $table->timestamps();
             $table->engine = 'InnoDB';	
             $table->charset = 'utf8';	

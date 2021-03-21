@@ -27,15 +27,23 @@ class PacienteEmergenciaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PacienteEmergenciaStoreRequest $request)
+    public function store(Request $request)
     {
+       
         $pacienteEmergencia = PacienteEmergencia::create($request->all());
+        foreach ($request->detalle as $qty) {
+            //print_r($qty);
+            //echo "<hr>";
+        }
+
+        //return;
         
         return response()->json([
             'status' => 'ok',
             'message' => 'Paciente creado exitosamente!',
-            'data'=> $pacienteEmergencia]
-        ,201);
+            'data'=> $pacienteEmergencia,
+            'request'=> $request->detalle
+        ],201);
     }
 
     /**

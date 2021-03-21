@@ -37,8 +37,8 @@ Route::group([
                 Route::resource('tipopersona', 'TipoPersonaController',[ 'except' => ['edit','create']]);
                 Route::resource('motivoingreso', MotivoIngresoController::class,[ 'except' => ['edit','create']]);
                 Route::resource('diagnostico', DiagnosticoController::class,[ 'except' => ['edit','create']]);
-                Route::resource('pacienteEmergencia', PacienteEmergenciaController::class,[ 'except' => ['edit','create']]);
-                Route::resource('pacienteEmergenciaDetalle', PacienteEmergenciaDetalleController::class,[ 'except' => ['edit','create']]);
+                Route::resource('emergencia', EmergenciaController::class,[ 'except' => ['edit','create']]);
+                // Route::resource('pacienteEmergenciaDetalle', PacienteEmergenciaDetalleController::class,[ 'except' => ['edit','create']]);
                 //Route::resource('Emergencia', EmergenciaController::class,[ 'except' => ['edit','create']]);
                 
             });

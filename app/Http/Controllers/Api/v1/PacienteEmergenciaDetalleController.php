@@ -8,6 +8,7 @@ use App\Http\Requests\Api\v1\PacienteEmergenciaDetalleUpdateRequest;
 use App\Models\Api\PacienteEmergenciaDetalle;
 use App\Models\Api\PacienteEmergencia;
 use App\Models\Api\Persona;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
@@ -30,13 +31,18 @@ class PacienteEmergenciaDetalleController extends Controller
      */
     public function store(PacienteEmergenciaDetalleStoreRequest $request)
     {
-        $pacienteEmergenciaDetalle = PacienteEmergenciaDetalle::create($request->all());
+        DB::beginTransaction();
         
-        return response()->json([
-            'status' => 'ok',
-            'message' => 'Paciente creado exitosamente!',
-            'data'=> $pacienteEmergenciaDetalle]
-        ,201);
+        $pacienteEmergenciaDetalle = PacienteEmergenciaDetalle::create($request->all());
+
+        return response()->json(
+            [
+                'status' => 'ok',
+                'message' => 'Paciente creado exitosamente!',
+                'data' => $pacienteEmergenciaDetalle
+            ],
+            201
+        );
     }
 
     /**
@@ -48,43 +54,36 @@ class PacienteEmergenciaDetalleController extends Controller
     public function show($id)
     {
         $pacienteEmergenciaDetalle = PacienteEmergenciaDetalle::find($id);
-        
-        if ( empty($pacienteEmergenciaDetalle) ) {
-            return response()->json([
-                'message' => 'Detalle del Paciente',
-                'status'=>'not found'],
-            404);
-        } 
+
+        if (empty($pacienteEmergenciaDetalle)) {
+            return response()->json(
+                [
+                    'message' => 'Detalle del Paciente',
+                    'status' => 'not found'
+                ],
+                404
+            );
+        }
         $persona = Persona::find($pacienteEmergenciaDetalle->persona_id);
         $paciente_emergencia = PacienteEmergencia::find($pacienteEmergenciaDetalle->paciente_emergencia_id);
-        $pacienteEmergenciaDetalle[
-            'readonly_apellidosNombresDoctor_paciente'
-            ] = empty($persona) ? '' : $persona->apellidos.' '. $persona->nombres;
-        $pacienteEmergenciaDetalle[
-                'readonly_identificacion_paciente'
-                ] = empty($persona) ? '' : $persona->identificacion;
-        $pacienteEmergenciaDetalle[
-                    'readonly_tipo_persona_paciente'
-                    ] = empty($persona) ? '' : $persona->tipo_persona_id;
-        
+        $pacienteEmergenciaDetalle['readonly_apellidosNombresDoctor_paciente'] = empty($persona) ? '' : $persona->apellidos . ' ' . $persona->nombres;
+        $pacienteEmergenciaDetalle['readonly_identificacion_paciente'] = empty($persona) ? '' : $persona->identificacion;
+        $pacienteEmergenciaDetalle['readonly_tipo_persona_paciente'] = empty($persona) ? '' : $persona->tipo_persona_id;
+
         $personaPacienteEmergencia = Persona::find($paciente_emergencia->persona_id);
-        $paciente_emergencia[
-            'readonly_apellidosNombresDoctor_paciente'
-            ] = empty($personaPacienteEmergencia) ? '' : $personaPacienteEmergencia->apellidos.' '. $personaPacienteEmergencia->nombres;
-        $paciente_emergencia[
-                'readonly_identificacion_paciente'
-                ] = empty($personaPacienteEmergencia) ? '' : $personaPacienteEmergencia->identificacion;
-        $paciente_emergencia[
-                    'readonly_tipo_persona_paciente'
-                    ] = empty($personaPacienteEmergencia) ? '' : $personaPacienteEmergencia->tipo_persona_id;
+        $paciente_emergencia['readonly_apellidosNombresDoctor_paciente'] = empty($personaPacienteEmergencia) ? '' : $personaPacienteEmergencia->apellidos . ' ' . $personaPacienteEmergencia->nombres;
+        $paciente_emergencia['readonly_identificacion_paciente'] = empty($personaPacienteEmergencia) ? '' : $personaPacienteEmergencia->identificacion;
+        $paciente_emergencia['readonly_tipo_persona_paciente'] = empty($personaPacienteEmergencia) ? '' : $personaPacienteEmergencia->tipo_persona_id;
         $pacienteEmergenciaDetalle['paciente_emergencia'] = $paciente_emergencia;
 
-        return response()->json([
-            'message' => 'Detalle del paciente',
-            'status'=>'ok',
-            'data' => $pacienteEmergenciaDetalle],
-        200);
-        
+        return response()->json(
+            [
+                'message' => 'Detalle del paciente',
+                'status' => 'ok',
+                'data' => $pacienteEmergenciaDetalle
+            ],
+            200
+        );
     }
 
     /**
@@ -100,8 +99,8 @@ class PacienteEmergenciaDetalleController extends Controller
 
         if (empty($pacienteEmergenciaDetalle)) {
             return response()->json([
-                    'message' => 'Actualizacion del Paciente',
-                    'status' => 'Not found',
+                'message' => 'Actualizacion del Paciente',
+                'status' => 'Not found',
             ], 404);
         }
 
@@ -110,9 +109,9 @@ class PacienteEmergenciaDetalleController extends Controller
 
         return response()->json([
             'message' => 'Actualizacion del Paciente',
-            'status'=>'ok',
+            'status' => 'ok',
             'data' => $pacienteEmergenciaDetalle
-        ],200);       
+        ], 200);
     }
 
     /**
