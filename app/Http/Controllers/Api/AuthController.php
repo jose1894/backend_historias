@@ -54,6 +54,7 @@ class AuthController extends Controller
 
         if (!Auth::attempt($credentials))
             return response()->json([
+                'status' => false,
                 'message' => 'Unauthorized'
             ], 401);
 
@@ -66,6 +67,7 @@ class AuthController extends Controller
         $token->save();
 
         return response()->json([
+            'status' => true,
             'access_token' => $tokenResult->accessToken,
             'token_type' => 'Bearer',
             'expires_at' => Carbon::parse($token->expires_at)->toDateTimeString()
