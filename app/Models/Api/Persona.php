@@ -43,6 +43,10 @@ class Persona extends Model
         return $this->hasMany(PacienteEmergencia::class, 'persona_id');
     }
 
+    public function enfermeraEmergencias() {
+        return $this->hasMany(PacienteEmergencia::class, 'persona_id');
+    }
+
     public function pacienteEmergenciaDetalles() {
         return $this->hasMany(PacienteEmergenciaDetalle::class, 'persona_id');
     }

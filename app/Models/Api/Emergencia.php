@@ -12,7 +12,7 @@ class Emergencia extends Model
 
     protected $table = 'emergencia';
 
-    protected $fillable = ['persona_id', 'turno', 'fecha'];
+    protected $fillable = ['persona_id', 'turno', 'enfermera_id', 'fecha'];
 
     protected $hidden = ['created_at', 'updated_at'];
 
@@ -22,5 +22,9 @@ class Emergencia extends Model
 
     public function detalle() {
         return $this->hasMany(EmergenciaDetalle::class, 'emergencia_id', 'id');
+    }
+
+    public function enfermero() {
+        return $this->belongsTo(Persona::class, 'enfermera_id', 'id');
     }
 }
