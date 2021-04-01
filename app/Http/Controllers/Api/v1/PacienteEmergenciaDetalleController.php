@@ -8,7 +8,6 @@ use App\Http\Requests\Api\v1\PacienteEmergenciaDetalleUpdateRequest;
 use App\Models\Api\PacienteEmergenciaDetalle;
 use App\Models\Api\PacienteEmergencia;
 use App\Models\Api\Persona;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
@@ -31,7 +30,6 @@ class PacienteEmergenciaDetalleController extends Controller
      */
     public function store(PacienteEmergenciaDetalleStoreRequest $request)
     {
-        DB::beginTransaction();
         
         $pacienteEmergenciaDetalle = PacienteEmergenciaDetalle::create($request->all());
 
