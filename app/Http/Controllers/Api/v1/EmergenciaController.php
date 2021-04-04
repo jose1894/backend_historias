@@ -42,9 +42,7 @@ class EmergenciaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(EmergenciaStoreRequest $request)
-    {
-    
-
+    {   
         DB::beginTransaction();
         try {        
             $eDetalleRequest = new EmergenciaDetalleStoreRequest;
@@ -74,6 +72,13 @@ class EmergenciaController extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
+            return response()->json(
+                [
+                    'status' => 'failed',
+                    'message' => 'La emergencia no pudo ser creada!',
+                ],
+                400
+            );
         }
 
         // return response()->json(
