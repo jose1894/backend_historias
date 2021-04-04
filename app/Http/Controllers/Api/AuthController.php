@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Requests\SignUpRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -13,14 +14,14 @@ class AuthController extends Controller
     /**
      * Registro de usuario
      */
-    public function signUp(Request $request)
+    public function signUp(SignUpRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|string|email|unique:users',
-            'password' => 'required|string',
-            'password_confirmation' => 'required|string'
-        ]);
+        // $request->validate([
+        //     'name' => 'required|string',
+        //     'email' => 'required|string|email|unique:users',
+        //     'password' => 'required|string',
+        //     'password_confirmation' => 'required|string'
+        // ]);
         
         if ($request->password !== $request->password_confirmation) {
             return response()->json([
@@ -55,7 +56,7 @@ class AuthController extends Controller
         if (!Auth::attempt($credentials))
             return response()->json([
                 'status' => false,
-                'message' => 'Unauthorized'
+                'message' => 'Usuario o contraseña inválidos'
             ], 401);
 
         $user = $request->user();
