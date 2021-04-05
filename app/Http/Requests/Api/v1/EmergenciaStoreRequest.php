@@ -27,7 +27,7 @@ class EmergenciaStoreRequest extends FormRequest
             'persona_id' => 'required',
             'turno' => 'required',
             'fecha' => 'required|date',
-            'enferemera_id' => 'required',
+            'enfermera_id' => 'required',
         ];
     }
 }
