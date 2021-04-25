@@ -21,18 +21,24 @@ class EmergenciaController extends Controller
      */
     public function index()
     {
-        $emergencia = Cache::remember('cacheemergencia',15/60, function() {
-			return Emergencia::simplePaginate(20);  // Paginamos cada 20 elementos.
-        });
+        $emergencia = Emergencia::where('persona_id', 2)
+            ->with([
+            'detalle',
+            'detalle.paciente', 
+            'medico',
+            'enfermero'])
+            ->simplePaginate(50);
+
+        return $emergencia;
         
-		return response()->json([
+		/*return response()->json([
             'message' => 'Emergencia list',
             'status'=>'ok',
             'totalRecords' => sizeOf($emergencia->items()),
             'siguiente'=>$emergencia->nextPageUrl(),
             'anterior'=>$emergencia->previousPageUrl(),
             'data'=>$emergencia->items(),
-        ], 200);
+        ], 200);*/
     }
 
     /**
