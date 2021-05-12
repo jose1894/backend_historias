@@ -26,7 +26,7 @@ class EmergenciaDetalleUpdateRequest extends FormRequest
         return [
             'paciente_id' => 'required',
             'motivoingreso' => 'required',
-            'dignostico' => 'required',
+            'diagnostico' => 'required',
             'dest',
             'observaciones'
         ];

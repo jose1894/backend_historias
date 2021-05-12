@@ -18,6 +18,7 @@ class EmergenciaDetalle extends Model
         'motivoingreso',
         'diagnostico_id',
         'diagnostico', 
+        'dest',
         'observaciones'
     ];
 

@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\v1\EmergenciaDetalleStoreRequest;
+use App\Http\Requests\Api\v1\EmergenciaDetalleUpdateRequest;
 use App\Http\Requests\Api\v1\EmergenciaStoreRequest;
+use App\Http\Requests\Api\v1\EmergenciaUpdateRequest;
 use App\Models\Api\Emergencia;
 use App\Models\Api\EmergenciaDetalle;
 use Illuminate\Http\Request;
@@ -157,9 +159,40 @@ class EmergenciaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EmergenciaUpdateRequest $request, $id)
     {
         //
+        DB::beginTransaction();
+        try {
+            $emergencia = Emergencia::find($id);
+            if (empty($emergencia)) {
+                return response()->json([
+                        'message' => 'Actualizacion de la persona',
+                        'status' => 'Not found',
+                ], 404);
+            }
+            $emergencia->fill($request->all());
+            $emergencia->save();
+
+            DB::commit();
+            return response()->json(
+                [
+                    'status' => 'ok',
+                    'message' => 'Emergencia creada exitosamente!',
+                    'data' => $emergencia
+                ],
+                201
+            );
+        }catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(
+                [
+                    'status' => 'failed',
+                    'message' => 'La emergencia no pudo ser modificada!',
+                ],
+                400
+            );
+        }
     }
 
     /**
