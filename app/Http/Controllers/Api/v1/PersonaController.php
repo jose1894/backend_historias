@@ -134,7 +134,7 @@ class PersonaController extends Controller
         
 		// Se devuelve código 204 No Content.
 		return response()->json([
-            'message' => 'persona eliminada',
+            'message' => 'Persona eliminada',
         ], 200);
     }
 }

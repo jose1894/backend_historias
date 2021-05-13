@@ -164,15 +164,33 @@ class EmergenciaController extends Controller
         //
         DB::beginTransaction();
         try {
+            $eDetalleRequest = new EmergenciaDetalleStoreRequest;
             $emergencia = Emergencia::find($id);
+
             if (empty($emergencia)) {
                 return response()->json([
                         'message' => 'Actualizacion de la persona',
                         'status' => 'Not found',
                 ], 404);
             }
+
             $emergencia->fill($request->all());
             $emergencia->save();
+
+            EmergenciaDetalle::where(['emergencia_id' => $request->id])->delete();
+
+            foreach($request->detalle as $detalle ) {
+                $detalle['emergencia_id'] = $emergencia->id;
+                $validator = Validator::make($detalle, $eDetalleRequest->rules());
+        
+                if ($validator->fails()) {
+                   throw new \Exception("Error al ingresar el paciente en la emergencia");
+                   break;
+                } 
+
+                $emergencia->detalle[] = EmergenciaDetalle::create($detalle);
+            }
+
 
             DB::commit();
             return response()->json(
@@ -183,7 +201,7 @@ class EmergenciaController extends Controller
                 ],
                 201
             );
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(
                 [
@@ -204,5 +222,23 @@ class EmergenciaController extends Controller
     public function destroy($id)
     {
         //
+        $emergencia = Emergencia::find($id);
+        
+        if ( empty($emergencia) ) {
+            return response()->json([
+                'message' => 'Detalle de la emergencia',
+                'status'=>'not found',
+                'isSuccess' => false
+            ],404);
+        } 
+        
+        $emergencia->delete();
+        
+		// Se devuelve código 204 No Content.
+		return response()->json([
+            'message' => 'Emergencia eliminada exitosamente!',
+            'isSuccess' => true,
+        ], 200);
+
     }
 }
