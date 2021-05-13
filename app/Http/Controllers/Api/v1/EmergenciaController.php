@@ -88,48 +88,7 @@ class EmergenciaController extends Controller
                 400
             );
         }
-
-        // return response()->json(
-        //     [
-        //         'status' => 'ok',
-        //         'message' => 'Paciente creado exitosamente!',
-        //         'data' => $pacienteEmergenciaDetalle
-        //     ],
-        //     201
-        // );
-        // dd($request);
-        // DB::beginTransaction();
-
-        // try {       
-        //     $persona = Emergencia::create($request->all());
-                
-        //     return response()->json([
-        //         'status' => 'ok',
-        //         'message' => 'Persona creado exitosamente!',
-        //         'data'=> $persona]
-        //     ,201);
-        // } catch (\Exception $e) {
-        //         DB::rollback();
-        //         throw $e;
-        // }
     }
-    // DB::beginTransaction();
-    
-    // try {
-    //     $post->comments()->save($comment);
-        
-    //     $post->last_comment_at = now();
-    //     $post->save();
-    
-    //     DB::commit();
-    // } catch (\Exception $e) {
-    //     DB::rollback();
-    //     throw $e;
-    // } catch (\Throwable $e) {
-    //     DB::rollback();
-    //     throw $e;
-    // }
-
     /**
      * Display the specified resource.
      *
@@ -169,7 +128,7 @@ class EmergenciaController extends Controller
 
             if (empty($emergencia)) {
                 return response()->json([
-                        'message' => 'Actualizacion de la persona',
+                        'message' => 'Error al modificar la emergencia',
                         'status' => 'Not found',
                 ], 404);
             }
@@ -196,7 +155,7 @@ class EmergenciaController extends Controller
             return response()->json(
                 [
                     'status' => 'ok',
-                    'message' => 'Emergencia creada exitosamente!',
+                    'message' => 'Emergencia modificada exitosamente!',
                     'data' => $emergencia
                 ],
                 201
